@@ -1,0 +1,27 @@
+<p id="timezones"></p>
+<input type="button" id="execute" value="execute" />
+<script>
+document.querySelector('input').addEventListener('click', function(event)
+	var xhr = new XMLHttpRequest ();
+	xhr.open('GET', './json.php'); 
+	// php파일을 왜 불러오지 못하는지?
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4 && xhr.status === 200){ 
+			// xhr.readyState 가 4인 것과, xhr.status 가 200인 건 무엇?
+			var _tzs = xhr.responseText;
+			var tzs = JSON.parse(_tzs); 
+			// 이 부분이 중요하다고 함!
+			var _str = ''; 
+			// ''로 묶어주는 것은 문자로 읽기 위한 것인지?
+			for(var i = 0; i< tzs.length; i++) { 
+				//i++은 무엇인지?
+				_str += '<li>'+tzs[i]+'</li>';
+			} 
+			_str = '<ul>'+_str+'</ul>';
+			document.querySelector('#timezones').innerHTML = _str;
+		}
+	}
+	xhr.send(); 
+	//xhr.send 는 무엇인지?
+});
+</script>
